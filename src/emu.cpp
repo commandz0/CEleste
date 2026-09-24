@@ -66,11 +66,10 @@ void init() {
     fontlib_SetTransparency(true);
     gen_lookups();
     profiler_init();
-    FILE *save = fopen(SAVE_NAME, "r");
+    uint8_t save = ti_Open(SAVE_NAME, "r");
     _init(save);
     if(save) {
-        fclose(save);
-        remove(SAVE_NAME);
+        ti_Close(save);
     }
 }
 
@@ -117,10 +116,11 @@ void update() {
 
 void save_game() {
     if(!needs_save()) return;
-    FILE *save = fopen("CelesteS", "w");
+    uint8_t save = ti_Open(SAVE_NAME, "w");
     if(!save) return;
     store_save(save);
-    fclose(save);
+    ti_SetArchiveStatus(true, save);
+    ti_Close(save);
 }
 
 void color(uint8_t c) {

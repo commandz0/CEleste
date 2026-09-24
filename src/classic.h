@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdint>
-#include <cstdio>
+#include <fileioc.h>
 
 extern uint8_t div256_24_buf[4];
 inline uint24_t div256_24(uint24_t num) {
@@ -284,7 +284,7 @@ extern vec2i room;
 extern int max_djump;
 extern Player *player;
 
-void _init(FILE *save);
+void _init(uint8_t save);
 void _update();
 void _draw();
 
@@ -313,7 +313,7 @@ int appr(int val, int target, int amount);
 int sign(int v);
 bool maybe();
 bool needs_save();
-void load_save(FILE *f);
-void store_save(FILE *f);
+void load_save(uint8_t handle);
+void store_save(uint8_t handle);
 
 extern int freeze;
