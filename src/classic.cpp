@@ -54,7 +54,7 @@ int start_game_flash;
 int seconds;
 int minutes;
 
-void _init(FILE *save) {
+void _init(uint8_t save) {
     for(auto &cloud: clouds) {
         cloud.x = rnd(128);
         cloud.y = rnd(128);
@@ -1596,14 +1596,14 @@ bool needs_save() {
     F(room.y)           \
     F(practice_mode)    \
 
-#define SERIALIZE(var) fread(&(var), sizeof(var), 1, f);
-void load_save(FILE *f) __attribute__ ((optnone)) {
+#define SERIALIZE(var) ti_Read(&(var), sizeof(var), 1, handle);
+void load_save(uint8_t handle) __attribute__ ((optnone)) {
     TO_SERIALIZE(SERIALIZE)
     load_room(room.x, room.y);
 }
 
-#define DESERIALIZE(var) fwrite(&(var), sizeof(var), 1, f);
-void store_save(FILE *f) __attribute__ ((optnone)) {
+#define DESERIALIZE(var) ti_Write(&(var), sizeof(var), 1, handle);
+void store_save(uint8_t handle) __attribute__ ((optnone)) {
     TO_SERIALIZE(DESERIALIZE)
 }
 
